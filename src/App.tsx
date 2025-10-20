@@ -1,17 +1,11 @@
-import ListGroup from "./components/ListGroup";
+import Alert from "./components/Alert";
 
 function App() {
-  let items = ["1", "3", "2", "7", "4"];
-  const handleSelectItem = (item: string) => {
-    console.log(item);
-  };
   return (
     <div>
-      <ListGroup
-        items={items}
-        heading="List of numbers"
-        onSelectItem={handleSelectItem}
-      />
+      <Alert>
+        <span>The blutoof device is connected a successfully</span>
+      </Alert>
     </div>
   );
 }
