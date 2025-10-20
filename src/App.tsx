@@ -1,11 +1,15 @@
-import Alert from "./components/Alert";
+import Buttons from "./components/Buttons";
+
+const onClick: () => void = () => {
+  console.log("Button clicked");
+};
 
 function App() {
   return (
     <div>
-      <Alert>
-        <span>The blutoof device is connected a successfully</span>
-      </Alert>
+      <Buttons color="secondary" onClick={onClick}>
+        My Button
+      </Buttons>
     </div>
   );
 }
