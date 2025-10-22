@@ -1,14 +1,19 @@
 import { useForm, type FieldValues } from "react-hook-form";
-interface FormData {
-  name: string;
-  age: number;
-}
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  name: z.string().min(2),
+  age: z.number().min(13),
+});
+type FormData = z.infer<typeof schema>;
+
 const Form = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
   const onSubmit = (data: FieldValues) => {
     console.log(data);
   };
@@ -20,37 +25,24 @@ const Form = () => {
           Name
         </label>
         <input
-          {...register("name", { required: true, minLength: 2 })}
+          {...register("name")}
           id="name"
           type="text"
           className="form-control"
         />
-        {errors.name?.type === "required" && (
-          <p className="text-danger">Name cannot be empty</p>
-        )}
-        {errors.name?.type === "minLength" && (
-          <p className="text-danger">Name should be atleast 2 characters</p>
-        )}
+        {errors.name && <p className="text-danger">{errors.name.message}</p>}
       </div>
       <div className="mb-3">
         <label htmlFor="age" className="form-label">
           Age
         </label>
         <input
-          {...register("age", { required: true, min: 13, max: 123 })}
+          {...register("age", { valueAsNumber: true })}
           id="age"
           type="number"
           className="form-control"
         />
-        {errors.age?.type === "required" && (
-          <p className="text-danger">Age is required</p>
-        )}
-        {errors.age?.type === "min" && (
-          <p className="text-danger">Age must be positive and above 13</p>
-        )}
-        {errors.age?.type === "max" && (
-          <p className="text-danger">Age cannot exceed 123</p>
-        )}
+        {errors.age && <p className="text-danger">{errors.age.message}</p>}
       </div>
       <button className="btn btn-primary" type="submit">
         Submit
