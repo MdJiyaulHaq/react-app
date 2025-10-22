@@ -1,9 +1,9 @@
-import Love from "./components/Love";
+import Form from "./components/Form";
 
 function App() {
   return (
     <div>
-      <Love />
+      <Form />
     </div>
   );
 }
